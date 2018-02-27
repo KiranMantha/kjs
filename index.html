@@ -1,0 +1,35 @@
+<html>
+<head>
+<script src="kjs.js"></script>
+</head>
+<body>
+	<p>test</p>
+	<div id="ctnr">
+	</div>
+	<script id="template" type="text">
+		<p>Hello, my name is {{ this.profile.name }}. I'm {{ this.profile.age }} years old.</p>
+		if(this.showSkills) { 
+			<ul>
+			for(var index in this.skills) { 
+				<li><a href="#">{{ this.skills[index] }}</a></li>
+			}
+			</ul>
+		} else { 
+			<p>none</p>
+		}
+		<button onclick="{{ this.greet }}">test</button>
+	</script>
+	<script>
+		var tmpl = TemplateEngine(document.getElementById('template').innerHTML, {
+			profile: {
+				name: "Krasimir",
+				age: 29
+			},
+			showSkills: true,
+			skills: ['js', 'html', 'css'],
+			greet: function(){ alert('hi'); }
+		});
+		document.getElementById('ctnr').innerHTML = tmpl;
+	</script>
+</body>
+</html>
