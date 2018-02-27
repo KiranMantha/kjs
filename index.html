@@ -17,7 +17,7 @@
 		} else { 
 			<p>none</p>
 		}
-		<button onclick="{{ this.greet }}">test</button>
+		<button onclick="({{ this.greet }})(); return false;">test</button>
 	</script>
 	<script>
 		var tmpl = TemplateEngine(document.getElementById('template').innerHTML, {
