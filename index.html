@@ -1,12 +1,12 @@
 <html>
 <head>
-<script src="kjs.js"></script>
+<script data-main="scripts/kjs" src="scripts/require.js"></script>
 </head>
 <body>
 	<p>test</p>
 	<div id="ctnr">
 	</div>
-	<script id="template" type="text">
+	<script id="template" type="text/kjs">
 		<p>Hello, my name is {{ this.profile.name }}. I'm {{ this.profile.age }} years old.</p>
 		if(this.showSkills) { 
 			<ul>
@@ -19,17 +19,6 @@
 		}
 		<button onclick="({{ this.greet }})(); return false;">test</button>
 	</script>
-	<script>
-		var tmpl = TemplateEngine(document.getElementById('template').innerHTML, {
-			profile: {
-				name: "Krasimir",
-				age: 29
-			},
-			showSkills: true,
-			skills: ['js', 'html', 'css'],
-			greet: function(){ alert('hi'); }
-		});
-		document.getElementById('ctnr').innerHTML = tmpl;
-	</script>
+	<script src="scripts/script.js"></script>
 </body>
 </html>
