@@ -9,7 +9,6 @@ Lite-TE is a simple light weight template engine.
 
 #Example
 
-`
     var liteTE = require('lite-te');
     var tempalte = liteTE.compile('<p>{{ this.profile.name }}</p><p>{{ this.profile.age }}</p>');
     var html = template.bindContext({ 
@@ -17,7 +16,5 @@ Lite-TE is a simple light weight template engine.
             name: 'Hello World',
             age: '100 years'
         }
-     });
-     documsnt.querySelector('body').innerHTML = html;
-
-`
+    });
+    documsnt.querySelector('body').innerHTML = html;
