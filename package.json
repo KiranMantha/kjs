@@ -1,6 +1,6 @@
 {
   "name": "lite-te",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "a simple light weight template engine",
   "main": "index.js",
   "scripts": {

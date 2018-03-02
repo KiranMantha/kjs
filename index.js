@@ -1,4 +1,4 @@
-module.exports = function kjs () {
+module.exports = (function () {
 	var re = /{{(.+?)}}/g, 
 		reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g, 
 		code = 'var r=[];\n',
@@ -57,4 +57,4 @@ module.exports = function kjs () {
     return {
 		compile: compile
 	};
-}
+})();
