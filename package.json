@@ -1,0 +1,12 @@
+{
+  "name": "lite-te",
+  "version": "1.0.1",
+  "description": "a simple light weight template engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Kiran Mantha",
+  "license": "ISC"
+}

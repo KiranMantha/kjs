@@ -1,15 +1,4 @@
-(function(global, factory) {
-	"use strict";
-	if ( typeof define === "function" && define.amd ) {
-		define(["kjs"], factory);
-	} else if ( typeof module === "object" && typeof module.exports === "object" ) {
-		module.exports = factory(require('kjs'));
-	} else {
-		// Browser globals (root is window)
-        global.returnExports = factory(global.kjs);
-	}
-// Pass this if window is not defined yet
-})( typeof self !== "undefined" ? self : this, function(kjs) {
+module.exports = function kjs () {
 	var re = /{{(.+?)}}/g, 
 		reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g, 
 		code = 'var r=[];\n',
@@ -68,4 +57,4 @@
     return {
 		compile: compile
 	};
-});
+}
