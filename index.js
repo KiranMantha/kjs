@@ -1,5 +1,23 @@
-module.exports = (function () {
-	var re = /{{(.+?)}}/g, 
+// if the module has no dependencies, the above pattern can be simplified to
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define([], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module.exports = factory();
+    } else {
+        // Browser globals (root is window)
+        root.liteTE = factory();
+  }
+}(typeof self !== 'undefined' ? self : this, function () {
+
+    // Just return a value to define the module export.
+    // This example returns an object, but the module
+    // can return a function as the exported value.
+    var re = /{{(.+?)}}/g, 
 		reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g, 
 		code = 'var r=[];\n',
 		result,
@@ -41,6 +59,7 @@ module.exports = (function () {
 		}
 		
 		code = (code + 'return r.join("");').replace(/[\r\t\n]/g, ' ');
+
 		var bindContext = function(context){
 			try { 
 				result = new Function('obj', code).apply(context, [context]); 
@@ -50,11 +69,13 @@ module.exports = (function () {
 			}
 			return result;
 		}
+		
 		return {
 			bindContext: bindContext
 		};
 	}
+	
     return {
-		compile: compile
-	};
-})();
+        compile: compile
+    };
+}));
