@@ -12,10 +12,6 @@
         root.liteTE = factory();
   }
 }(typeof self !== 'undefined' ? self : this, function () {
-
-    // Just return a value to define the module export.
-    // This example returns an object, but the module
-    // can return a function as the exported value.
     var re = /{{(.+?)}}/g, 
 		reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g, 
 		code = 'var r=[];\n',
