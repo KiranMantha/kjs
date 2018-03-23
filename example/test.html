@@ -9,10 +9,11 @@
 </head>
 <body>
     <div></div>
-    <script id="sampleTpl">
+    <script id="sampleTpl" type="text/lite-te">
         <div>
-            <p>{{ this.name }}</p>
-            <p>{{ this.age }}</p>
+            <p>My Name is {{ this.name }}</p>
+            <p>My Age is {{ this.age }}</p>
+			<p>My Skills are</p>
             <ul>
                 for(var i=0; i < this.skills.length; i++) {
                     <li>{{ this.skills[i] }}</li>

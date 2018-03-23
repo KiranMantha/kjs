@@ -7,7 +7,3 @@ var html = template.bindContext({
     skills: ['html', 'css', 'javascript']
 });
 document.querySelector('div').innerHTML = html;
-setTimeout(function(){
-    var html = template.bindContext({ name: 'Hello World after 5sec!!' });
-    document.querySelector('div').innerHTML = html;
-}, 5000);

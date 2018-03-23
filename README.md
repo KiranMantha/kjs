@@ -5,7 +5,7 @@ Lite-TE is a simple light weight template engine.
 1. install lite-te using npm `npm install lite-te --save`
 2. import lite-te as `var liteTE = require('lite-te');`
 3. pass your html to compile function of liteTE as `var template = liteTE.compile(your-html-string);`
-4. the `template` variable now consists of `bindContext` function which binds your javascript object to the        html. `var html = temlate.bindContext(your-object);`
+4. the `template` variable now consists of `bindContext` function which binds your javascript object to the        html. `var html = template.bindContext(your-object);`
 
 # Example
 
@@ -29,7 +29,7 @@ Lite-TE is a simple light weight template engine.
 
 Example
 
-    var tempalte = liteTE.compile('<p>{{ this.profile.name }}</p><p>{{ this.profile.age }}</p>');
+    var template = liteTE.compile('<p>{{ this.profile.name }}</p><p>{{ this.profile.age }}</p>');
     var html = template.bindContext({ 
         profile: {
             name: 'Hello World',
@@ -42,7 +42,7 @@ Example
 
 in HTML
 
-    <script id="sampleTpl">
+    <script id="sampleTpl" type="text/lite-te">
         <div>
             <p>{{ this.name }}</p>
             <p>{{ this.age }}</p>
@@ -59,7 +59,7 @@ in JS
     var tpl = document.getElementById('sampleTpl').innerHTML;
     var template = liteTE.compile(tpl);
     var html = template.bindContext({ 
-        name: 'Hello World!!' ,
+        name: 'Hello World!!',
         age: 25,
         skills: ['html', 'css', 'javascript']
     });
