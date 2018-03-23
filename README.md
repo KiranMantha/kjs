@@ -38,7 +38,7 @@ Example
     });
     document.querySelector('body').innerHTML = html;
 
-Complex Example
+#### Complex Example
 
 in HTML
 
@@ -64,10 +64,6 @@ in JS
         skills: ['html', 'css', 'javascript']
     });
     document.querySelector('div').innerHTML = html;
-    setTimeout(function(){
-        var html = template.bindContext({ name: 'Hello World after 5sec!!' });
-        document.querySelector('div').innerHTML = html;
-    }, 5000);
-    
+
 
 Note: In the above example we're not using `require` as we're not using node environment.
