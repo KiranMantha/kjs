@@ -57,7 +57,7 @@
 
 		var bindContext = function(context){
 			try { 
-				result = new Function('obj', code).apply(context, [context]); 
+				result = new Function('obj', code).call(context); 
 			}
 			catch(err) { 
 				console.error("'" + err.message + "'", " in \n\nCode:\n", code, "\n"); 
