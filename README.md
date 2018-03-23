@@ -38,4 +38,36 @@ Example
     });
     document.querySelector('body').innerHTML = html;
 
+Complex Example
+
+in HTML
+
+    <script id="sampleTpl">
+        <div>
+            <p>{{ this.name }}</p>
+            <p>{{ this.age }}</p>
+            <ul>
+                for(var i=0; i < this.skills.length; i++) {
+                    <li>{{ this.skills[i] }}</li>
+                }
+            </ul>
+        </div>
+    </script>
+
+in JS
+
+    var tpl = document.getElementById('sampleTpl').innerHTML;
+    var template = liteTE.compile(tpl);
+    var html = template.bindContext({ 
+        name: 'Hello World!!' ,
+        age: 25,
+        skills: ['html', 'css', 'javascript']
+    });
+    document.querySelector('div').innerHTML = html;
+    setTimeout(function(){
+        var html = template.bindContext({ name: 'Hello World after 5sec!!' });
+        document.querySelector('div').innerHTML = html;
+    }, 5000);
+    
+
 Note: In the above example we're not using `require` as we're not using node environment.
