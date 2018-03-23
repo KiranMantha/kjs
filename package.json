@@ -1,6 +1,6 @@
 {
   "name": "lite-te",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "A simple light weight(2kb) template engine which can be used either in node environment or node-less environment.",
   "main": "index.js",
   "scripts": {
