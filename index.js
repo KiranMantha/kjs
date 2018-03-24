@@ -13,7 +13,7 @@
   }
 }(typeof self !== 'undefined' ? self : this, function () {
     var re = /{{(.+?)}}/g, 
-		reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g, 
+		reExp = /(^( )?(var|if|for|else|switch|case|break|do|while|{|}|;))(.*)?/g, 
 		code = 'var r=[];\n',
 		result,
 		match,
@@ -42,8 +42,7 @@
 						cursor = match.index + match[0].length;					
 					}
 					construct(htmlArr[i].substr(cursor, html.length - cursor));
-				} else {
-					
+				} else {					
 					//if not expression simply concatenate as string
 					code = code + 'r.push("' + htmlArr[i] + '");\n';
 				}
