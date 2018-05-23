@@ -27,7 +27,7 @@
 		return construct;
 	}
 
-	var compile = function(html){
+	var compile = function(html, appendTo){
 		// split entire template into individual lines
 		htmlArr = html.split(/[\n\r]/g);
 		
@@ -61,7 +61,8 @@
 			catch(err) { 
 				console.error("'" + err.message + "'", " in \n\nCode:\n", code, "\n"); 
 			}
-			return result;
+			let node = (new DOMParser()).parseFromString(result, 'application/xml').children[0];
+			document.querySelector(appendTo).appendChild(node);
 		}
 		
 		return {
