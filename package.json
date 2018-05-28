@@ -4,7 +4,8 @@
   "description": "A simple light weight(2kb) template engine which can be used either in node environment or node-less environment.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --config webpack.config.js --mode=development"
   },
   "repository": "https://github.com/KiranMantha/lite-te",
   "keywords": [
@@ -15,5 +16,17 @@
     "light weight template engine"
   ],
   "author": "Kiran Mantha",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "del": "^3.0.0",
+    "eslint-loader": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "pre-build-webpack": "^0.1.0",
+    "webpack": "^4.9.1",
+    "webpack-cli": "^2.1.4",
+    "webpack-dev-server": "^3.1.4"
+  }
 }
