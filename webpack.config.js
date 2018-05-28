@@ -11,7 +11,7 @@ module.exports = {
     context: rootDir,
     target: "web",
     entry: {
-        app: './src/testEle'
+        app: './src/working/testEle'
     },
     output: {
         path:  buildFolder,
@@ -33,7 +33,7 @@ module.exports = {
     },
     serve: { //object
         port: 9000,
-        content: './dist'
+        content: buildFolder
     },
     devServer: {
         contentBase: buildFolder,
