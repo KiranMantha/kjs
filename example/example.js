@@ -1,8 +1,19 @@
-//var liteTE = require('lite-te');
-var tpl = document.getElementById('sampleTpl').innerHTML;
-var template = liteTE.compile(tpl, 'div');
-var html = template.bindContext({ 
-    name: 'Hello World!!' ,
-    age: 25,
-    skills: ['html', 'css', 'javascript']
-});
+import LiteTE from '../src/templateEngine';
+
+class TestEle extends LiteTE {
+  greeting = 'Hello';
+
+  constructor() {
+    super();
+  }
+
+  sayHello = (e) => {
+    alert(this.greeting);
+  }
+
+  render() {
+    return `<div> { greeting } <button onclick='sayHello'>click</button></div>`;
+  }
+}
+
+customElements.define('test-ele', TestEle);
