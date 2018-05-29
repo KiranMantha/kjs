@@ -1,22 +1,23 @@
 import LiteTE from '../templateEngine';
-import render from '../render';
 
-export class TestEle extends LiteTE {
+export default class TestEle extends LiteTE {
   greeting = 'Hello';
+  greeetingTest = 'Greeting from parent component';
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   sayHello = (e) => {
     alert(this.greeting);
+    console.log(this.props);
   }
 
   render() {
-    return `<div> { greeting } <button onclick='sayHello'>click</button></div>`;
+    return `<div> 
+      { greeting } { props.test }
+      <button onclick='sayHello'>click</button>
+      <test-elem greeetingTest='{greeetingTest}'></test-elem>
+    </div>`;
   }
 }
-
-let tag = '<TestEle></TestEle>';
-
-render( tag, document.body);

@@ -11,7 +11,7 @@ module.exports = {
     context: rootDir,
     target: "web",
     entry: {
-        app: './src/working/testEle'
+        app: './src/working/main'
     },
     output: {
         path:  buildFolder,

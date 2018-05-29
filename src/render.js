@@ -6,5 +6,4 @@ export default function render(node, container) {
     let _vdom = createVDom(_node);
     console.log(_vdom);
     getHtmlFromVDom(_vdom, container, {});
-    debugger;
 }

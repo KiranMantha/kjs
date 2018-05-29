@@ -1,50 +1,59 @@
 import _ from 'lodash';
 import * as escape from 'escape-html';
+import registry from './registerComponent';
+
 export const getHtmlFromVDom = (vdom, parentNode, context) => {
-    let isEvent = /^on/,
-        isExpression = /{([^{}].*?)}/g,
-        match;
+    let isEvent = /^on/;
+    let isExpression = /{([^{}]+)}/g;
+    let match;
+    let node;
+    let _component = registry.getComponent(vdom.type);
 
-    let _node = escape(vdom.type);
-
-    if(typeof _node === 'function') {
-        for (let prop in vdom.props) { 
-            if (match = prop.match(isExpression)) {
-                let value = _.get(context, match[1].trim(), '');
-                vdom.props[prop] = value;
+    if (_component && typeof _component === 'function') {
+        for (let prop in vdom.props) {
+            let value = vdom.props[prop];
+            if (match = isExpression.exec(value)) {
+                let _value = _.get(context, match[1].trim(), '');
+                vdom.props[prop] = _value;
             }
         }
-        let comp = new _node(vdom.props);
-    } 
+        node = new _component(vdom.props);
+    } else if (!node) {
+        node = document.createElement(vdom.type);
 
-    let node = document.createElement(vdom.type);
-
-    //Add properties
-    for (let prop in vdom.props) {
-        if (prop.match(isEvent)) {
-            node.addEventListener(
-                prop.substring(2),
-                context[vdom.props[prop]],
-                false
-            );
-        } else {
-            node.setAttribute(prop, vdom.props[prop]);
-        }
-    }
-
-    //Append Children Nodes
-    for (let child of vdom.children) {
-        if (typeof child === 'string') {
-            if (match = isExpression.exec(child)) {
-                let value = _.get(context, match[1].trim(), '');
-                let textnode = document.createTextNode(value);
-                node.appendChild(textnode);
+        //Add properties
+        for (let prop in vdom.props) {
+            if (prop.match(isEvent)) {
+                node.addEventListener(
+                    prop.substring(2),
+                    context[vdom.props[prop]],
+                    false
+                );
             } else {
-                let textnode = document.createTextNode(child);
-                node.appendChild(textnode);
+                node.setAttribute(prop, vdom.props[prop]);
             }
-        } else {
-            getHtmlFromVDom(child, node, context);
+        }
+
+        //Append Children Nodes
+        for (let child of vdom.children) {
+            if (typeof child === 'string') {
+                let found = [];
+                while( match = isExpression.exec(child) ) {
+                    found.push(match[1]);
+                }
+                if (found.length > 0) {
+                    _.forEach(found, (val) => {
+                        let value = _.get(context, val.trim(), '');
+                        let textnode = document.createTextNode(value);
+                        node.appendChild(textnode);
+                    });                    
+                } else {
+                    let textnode = document.createTextNode(child);
+                    node.appendChild(textnode);
+                }
+            } else {
+                getHtmlFromVDom(child, node, context);
+            }
         }
     }
     parentNode.appendChild(node);

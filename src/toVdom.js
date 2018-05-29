@@ -27,9 +27,7 @@ export const createVDom = (node) => {
       if (cnode.nodeType === 3) {
         if (cnode.nodeValue.trim()) vdom.children.push(cnode.nodeValue);
       } else if (cnode.nodeType === 1) {
-        if (cnode.hasChildNodes()) {
-          vdom.children.push(createVDom(cnode));
-        }
+        vdom.children.push(createVDom(cnode));
       }
     }
   };

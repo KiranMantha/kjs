@@ -5,22 +5,22 @@ import { getHtmlFromVDom } from './vdomToHtml';
 export default class LiteTE extends HTMLElement {
   _vdom = {};
   _config = {};
+  props = {};
 
-  constructor() {
+  constructor(props) {
     super();
-    console.log(this);
     this._vdom = new VDOM();
+    this.props = props;
   }
 
   _getVDom = () => {
     let node = (new DOMParser()).parseFromString(this._config.template, 'application/xml').children[0];
     this._vdom = createVDom(node);
-    console.log(this._vdom);
   }
 
   _compile = () => {
     this._getVDom();
-    getHtmlFromVDom(this._vdom, document.querySelector('body'), this);
+    getHtmlFromVDom(this._vdom, this, this);
   }
 
   // Fires when custom element binds to DOM
