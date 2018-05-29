@@ -17,7 +17,9 @@ export default class TestEle extends LiteTE {
     return `<div> 
       { greeting } { props.test }
       <button onclick='sayHello'>click</button>
-      <test-elem greeetingTest='{greeetingTest}'></test-elem>
+      <div>
+        <test-elem greeetingTest='{greeetingTest}'></test-elem>
+      </div>
     </div>`;
   }
 }
