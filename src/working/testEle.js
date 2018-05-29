@@ -1,6 +1,7 @@
 import LiteTE from '../templateEngine';
+import render from '../render';
 
-class TestEle extends LiteTE {
+export class TestEle extends LiteTE {
   greeting = 'Hello';
 
   constructor() {
@@ -16,4 +17,6 @@ class TestEle extends LiteTE {
   }
 }
 
-customElements.define('test-ele', TestEle);
+let tag = '<TestEle></TestEle>';
+
+render( tag, document.body);
