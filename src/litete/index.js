@@ -2,11 +2,8 @@ import Component from './templateEngine';
 import render from './render';
 import registry from './registerComponent';
 
-
-const Litete = {
+export {
     Component,
     render,
     registry
 }
-
-export default Litete;

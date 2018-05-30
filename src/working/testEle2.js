@@ -1,4 +1,4 @@
-import Component from '../litete/templateEngine';
+import { Component } from '../litete';
 
 export default class TestElem extends Component {
   constructor(props) {

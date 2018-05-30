@@ -1,6 +1,6 @@
-import litete from '../litete';
+import { Component } from '../litete';
 
-export default class TestEle extends litete.Component {
+export default class TestEle extends Component {
   greeting = 'Hello';
   greeetingTest = 'Greeting from parent component';
 
