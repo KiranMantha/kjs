@@ -1,15 +1,17 @@
-import _ from "lodash";
+import get from "lodash/get";
+import forEach from "lodash/forEach";
+import kebabCase from "lodash/kebabCase";
 
 const registry = (() => {
     let _registry = {};
 
     let _get = (componentName) => {
-        return _.get(_registry, `lte.${componentName}`, null);
+        return get(_registry, `lte.${componentName}`, null);
     }
 
     let _set = (...args) => {
-        _.forEach(args, (component) => {
-            let compName = _.kebabCase(component.name);
+        forEach(args, (component) => {
+            let compName = kebabCase(component.name);
             let name = `lte.${compName}`;
             if (!_registry[name] && !customElements.get(compName)) {
                 _registry[name] = component;

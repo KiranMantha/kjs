@@ -25,10 +25,10 @@ export default class LiteTE extends HTMLElement {
 
   // Fires when custom element binds to DOM
   connectedCallback() {
+    if (this.onMount) this.onMount();
     if (this.render) {
       this._config.template = this.render();
-      this._compile();
-      if (this.onMount) this.onMount();
+      this._compile();      
     } else {
       throw ('Render is not defined in the component ' + this.constructor.name);
     }

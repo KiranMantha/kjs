@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import * as escape from 'escape-html';
+import get from 'lodash/get';
+import forEach from 'lodash/forEach';
 import registry from './registerComponent';
 
 export const getHtmlFromVDom = (vdom, parentNode, context) => {
@@ -13,7 +13,7 @@ export const getHtmlFromVDom = (vdom, parentNode, context) => {
         for (let prop in vdom.props) {
             let value = vdom.props[prop];
             if (match = isExpression.exec(value)) {
-                let _value = _.get(context, match[1].trim(), '');
+                let _value = get(context, match[1].trim(), '');
                 vdom.props[prop] = _value;
             }
         }
@@ -42,8 +42,8 @@ export const getHtmlFromVDom = (vdom, parentNode, context) => {
                     found.push(match[1]);
                 }
                 if (found.length > 0) {
-                    _.forEach(found, (val) => {
-                        let value = _.get(context, val.trim(), '');
+                    forEach(found, (val) => {
+                        let value = get(context, val.trim(), '');
                         let textnode = document.createTextNode(value);
                         node.appendChild(textnode);
                     });                    

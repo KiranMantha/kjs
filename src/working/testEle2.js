@@ -10,10 +10,20 @@ export default class TestElem extends LiteTE {
     console.log(this.props);
   }
 
+  onMount(){
+    this.ht = [1,2,3].map((i)=>{
+      return `<li>${i}</li>`;
+    }).join('');
+  }
+
   render() {
-    return `<div> 
-      { props.greeetingTest }
+    const { greeetingTest } = this.props;
+    return(`<div> 
+      ${ greeetingTest }
       <button onclick='sayHello'>click</button>
-    </div>`;
+      <ul>
+        ${ this.ht }
+      </ul>
+    </div>`);
   }
 }
