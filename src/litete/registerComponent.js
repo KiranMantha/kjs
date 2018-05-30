@@ -13,10 +13,32 @@ const registry = (() => {
         forEach(args, (component) => {
             let compName = kebabCase(component.name);
             let name = `lte.${compName}`;
-            if (!_registry[name] && !customElements.get(compName)) {
+            if (!_registry[name]) {
                 _registry[name] = component;
-                customElements.define(compName, component);
             }
+        });
+
+        if(window.customElements) {
+            for(let regComp in _registry) {
+                customElements.define(regComp.substring(4), _registry[regComp]);
+            }
+        } else {
+            // _loadScript('./polyfill.js').then(e => {
+            //     // Polyfill loaded.
+            //     for(let regComp in _registry) {
+            //         customElements.define(regComp.substring(4), _registry[regComp]);
+            //     }
+            // });
+        }
+    }
+
+    let _loadScript = (src) => {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
         });
     }
 
