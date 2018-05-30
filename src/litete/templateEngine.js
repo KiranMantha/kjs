@@ -1,8 +1,8 @@
 import VDOM from './vdom';
-import { createVDom } from './toVdom';
-import { getHtmlFromVDom } from './vdomToHtml';
+import createVDom from './toVdom';
+import getHtmlFromVDom from './vdomToHtml';
 
-export default class LiteTE extends HTMLElement {
+export default class Component extends HTMLElement {
   _vdom = {};
   _config = {};
   props = {};

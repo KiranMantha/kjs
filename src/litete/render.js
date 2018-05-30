@@ -1,5 +1,5 @@
-import { createVDom } from './toVdom';
-import { getHtmlFromVDom } from './vdomToHtml';
+import createVDom from './toVdom';
+import getHtmlFromVDom from './vdomToHtml';
 
 export default function render(node, container) {
     let _node = (new DOMParser()).parseFromString(node, 'application/xml').children[0];

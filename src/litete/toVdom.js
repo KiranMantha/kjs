@@ -1,6 +1,6 @@
 import VDOM from './vdom';
 
-export const createVDom = (node) => {
+const createVDom = (node) => {
   let vdom = new VDOM();
 
   for (let attr of node.attributes) {
@@ -33,3 +33,5 @@ export const createVDom = (node) => {
   };
   return vdom;
 }
+
+export default createVDom;

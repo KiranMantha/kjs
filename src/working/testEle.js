@@ -1,6 +1,6 @@
-import LiteTE from '../templateEngine';
+import litete from '../litete';
 
-export default class TestEle extends LiteTE {
+export default class TestEle extends litete.Component {
   greeting = 'Hello';
   greeetingTest = 'Greeting from parent component';
 

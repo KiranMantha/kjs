@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import forEach from 'lodash/forEach';
 import registry from './registerComponent';
 
-export const getHtmlFromVDom = (vdom, parentNode, context) => {
+const getHtmlFromVDom = (vdom, parentNode, context) => {
     let isEvent = /^on/;
     let isExpression = /{([^{}]+)}/g;
     let match;
@@ -58,3 +58,5 @@ export const getHtmlFromVDom = (vdom, parentNode, context) => {
     }
     parentNode.appendChild(node);
 }
+
+export default getHtmlFromVDom;

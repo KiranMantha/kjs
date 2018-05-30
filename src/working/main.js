@@ -1,8 +1,7 @@
 import TestEle from './testEle';
 import TestElem from './testEle2';
-import registry from '../registerComponent';
-import render from '../render';
+import litete from '../litete';
 
-registry.registerComponents(TestEle, TestElem);
+litete.registry.registerComponents(TestEle, TestElem);
 
-render('<test-ele test="kiran"></test-ele>', document.querySelector('#cntr'));
+litete.render('<test-ele test="kiran"></test-ele>', document.querySelector('#cntr'));

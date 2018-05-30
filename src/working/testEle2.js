@@ -1,6 +1,6 @@
-import LiteTE from '../templateEngine';
+import Component from '../litete/templateEngine';
 
-export default class TestElem extends LiteTE {
+export default class TestElem extends Component {
   constructor(props) {
     super(props);
   }
