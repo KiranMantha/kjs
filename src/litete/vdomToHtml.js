@@ -25,19 +25,13 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
         //Add properties
         for (let prop in vdom.props) {
             let listener;
-            if (prop.match(isEvent)) {
+            if (prop.match(isEvent)) {                
                 if(match = hasBind.exec(vdom.props[prop])) {
-                    let fnbody = `return context.${vdom.props[prop]}`;
-                    listener = (new Function("context", fnbody))(context);
+                    listener = (new Function('context', `return context.${vdom.props[prop]}`))(context);
                 } else {
                     listener = context[vdom.props[prop]]
                 }
-
-                node.addEventListener(
-                    prop.substring(2),
-                    listener,
-                    false
-                );
+                node.addEventListener(prop.substring(2), listener, false);
             } else {
                 node.setAttribute(prop, vdom.props[prop]);
             }
