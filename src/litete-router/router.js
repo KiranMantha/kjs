@@ -1,3 +1,4 @@
+//router-view
 export default Router = (() => {
     let routes = [];
     let mode = null;

@@ -9,31 +9,38 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
     let match;
     let node;
     let _component = registry.getComponent(vdom.type);
-
     if (_component && typeof _component === 'function') {
         for (let prop in vdom.props) {
-            let value = vdom.props[prop];
-            if (match = isExpression.exec(value)) {
-                let _value = get(context, match[1].trim(), '');
-                vdom.props[prop] = _value;
+            if (prop !== 'children') {
+                let value = vdom.props[prop];
+                if (match = isExpression.exec(value)) {
+                    let _value = get(context, match[1].trim(), '');
+                    vdom.props[prop] = _value;
+                }
             }
         }
         node = new _component(vdom.props);
     } else if (!node) {
         node = document.createElement(vdom.type);
-
+        node._vdom = vdom;
         //Add properties
         for (let prop in vdom.props) {
-            let listener;
-            if (prop.match(isEvent)) {                
-                if(match = hasBind.exec(vdom.props[prop])) {
-                    listener = (new Function('context', `return context.${vdom.props[prop]}`))(context);
+            if (prop !== 'children') {
+                let listener;
+                if (prop.match(isEvent)) {
+                    if (match = hasBind.exec(vdom.props[prop])) {
+                        listener = (new Function('context', `return context.${vdom.props[prop]}`))(context);
+                    } else {
+                        listener = context[vdom.props[prop]]
+                    }
+                    node.addEventListener(prop.substring(2), listener, false);
+                } else if (match = isExpression.exec(vdom.props[prop])) {
+                    let _value = get(context, match[1].trim(), '');
+                    vdom.props[prop] = _value;
+                    node.setAttribute(prop, vdom.props[prop]);
                 } else {
-                    listener = context[vdom.props[prop]]
+                    node.setAttribute(prop, vdom.props[prop]);
                 }
-                node.addEventListener(prop.substring(2), listener, false);
-            } else {
-                node.setAttribute(prop, vdom.props[prop]);
             }
         }
 
@@ -41,7 +48,7 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
         for (let child of vdom.children) {
             if (typeof child === 'string') {
                 let found = [];
-                while( match = isExpression.exec(child) ) {
+                while (match = isExpression.exec(child)) {
                     found.push(match[1]);
                 }
                 if (found.length > 0) {
@@ -49,7 +56,7 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
                         let value = get(context, val.trim(), '');
                         let textnode = document.createTextNode(value);
                         node.appendChild(textnode);
-                    });                    
+                    });
                 } else {
                     let textnode = document.createTextNode(child);
                     node.appendChild(textnode);

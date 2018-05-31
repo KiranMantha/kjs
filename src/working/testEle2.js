@@ -40,6 +40,9 @@ export default class TestElem extends Component {
       <ul>
         ${ this.ht }
       </ul>
+      <router-view>
+        <router-link path='/home' displayName='router link1' render='TestElemt'></router-link>
+      </router-view>
     </div>`);
   }
 }

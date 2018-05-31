@@ -11,16 +11,18 @@ export default class Component extends HTMLElement {
     super();
     this._vdom = new VDOM();
     this.props = props;
+    this.attachShadow({ mode: 'open' });
   }
 
   _getVDom = () => {
     let node = (new DOMParser()).parseFromString(this._config.template, 'application/xml').children[0];
-    this._vdom = createVDom(node);
+    this._vdom = createVDom(node, this._vdom.children);
+    console.log(this.constructor.name, this._vdom);
   }
 
   _compile = () => {
     this._getVDom();
-    getHtmlFromVDom(this._vdom, this, this);
+    getHtmlFromVDom(this._vdom, this.shadowRoot, this);
   }
 
   _callOnMount = async () => {

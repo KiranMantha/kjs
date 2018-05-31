@@ -1,7 +1,9 @@
 import VDOM from './vdom';
 
-const createVDom = (node) => {
+const createVDom = (...args) => {
   let vdom = new VDOM();
+  let node = args[0];
+  let children = args[1];
 
   for (let attr of node.attributes) {
     vdom.props[attr.name] = attr.value;
@@ -21,7 +23,9 @@ const createVDom = (node) => {
   */
 
   //list out all childnodes
-  if (node.hasChildNodes()) {
+  if (children && children.length > 0) {
+    vdom.children = children;
+  } else if (node.hasChildNodes()) {
     let nodes = node.childNodes;
     for (let cnode of nodes) {
       if (cnode.nodeType === 3) {
@@ -31,6 +35,7 @@ const createVDom = (node) => {
       }
     }
   };
+  vdom.props.children = vdom.children;
   return vdom;
 }
 
