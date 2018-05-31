@@ -15,7 +15,7 @@ export default class TestEle extends Component {
 
   render() {
     return `<div> 
-      { greeting } { props.test }
+      ${ this.greeting + ' '+ this.props.test }
       <button onclick='sayHello'>click</button>
       <div>
         <test-elem greeetingTest='{greeetingTest}'></test-elem>

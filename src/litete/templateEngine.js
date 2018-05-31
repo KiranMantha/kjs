@@ -23,15 +23,23 @@ export default class Component extends HTMLElement {
     getHtmlFromVDom(this._vdom, this, this);
   }
 
+  _callOnMount = async () => {
+    if(this.onMount) {
+      return this.onMount();
+    }
+    return true;
+  }
+
   // Fires when custom element binds to DOM
   connectedCallback() {
-    if (this.onMount) this.onMount();
     if (this.render) {
-      this._config.template = this.render();
-      this._compile();      
+      this._callOnMount().then(() => { 
+        this._config.template = this.render();
+        this._compile();
+      });
     } else {
       throw ('Render is not defined in the component ' + this.constructor.name);
-    }
+    }      
   }
 
   //Fires whenever an attribute is added, removed or updated

@@ -10,10 +10,26 @@ export default class TestElem extends Component {
     console.log(this.props);
   }
 
-  onMount(){
-    this.ht = [1,2,3].map((i)=>{
-      return `<li>${i}</li>`;
+  alert = (userName) => {
+    alert(userName);
+  }
+
+  loadUsers = async () => {
+    let k = await fetch('https://jsonplaceholder.typicode.com/users');
+    let data = await k.json();
+    this.ht = data.map((user) => {
+      return `<li onclick="alert.bind(null, '${ user.name }')">${ user.name }</li>`;
     }).join('');
+  }
+
+  onMount() {
+    // return if making api calls
+    return this.loadUsers();
+
+    // no need to return if not making api calls
+    // this.ht = [1,2,3].map((k) => {
+    //    return `<li>${ k }</li>`;
+    // }).join('');
   }
 
   render() {

@@ -5,6 +5,7 @@ import registry from './registerComponent';
 const getHtmlFromVDom = (vdom, parentNode, context) => {
     let isEvent = /^on/;
     let isExpression = /{([^{}]+)}/g;
+    let hasBind = /.bind(.*?)/g;
     let match;
     let node;
     let _component = registry.getComponent(vdom.type);
@@ -23,10 +24,18 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
 
         //Add properties
         for (let prop in vdom.props) {
+            let listener;
             if (prop.match(isEvent)) {
+                if(match = hasBind.exec(vdom.props[prop])) {
+                    let fnbody = `return context.${vdom.props[prop]}`;
+                    listener = (new Function("context", fnbody))(context);
+                } else {
+                    listener = context[vdom.props[prop]]
+                }
+
                 node.addEventListener(
                     prop.substring(2),
-                    context[vdom.props[prop]],
+                    listener,
                     false
                 );
             } else {
