@@ -1,4 +1,5 @@
 //router-view
+//https://gist.github.com/muralikrishnat/9c7049fda1a3708c780c
 export default Router = (() => {
     let routes = [];
     let mode = null;

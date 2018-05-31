@@ -15,6 +15,9 @@ export default class RouterView extends Component {
     }
 
     render(){
-        return '<slot></slot>';
+        return `
+        <slot></slot>
+        <div></div>
+        `;
     }
 }
