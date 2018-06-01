@@ -40,9 +40,9 @@ module.exports = {
         port: 9000
     },
     plugins: [
-        // new WebpackPreBuildPlugin(function (stats) {
-        //     del([buildFolder]);
-        // }),
+        new WebpackPreBuildPlugin(function (stats) {
+            del([buildFolder]);
+        }),
         new HtmlWebpack({
             filename: 'index.html',
             inject: 'body',
