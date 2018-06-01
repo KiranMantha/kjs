@@ -1,6 +1,9 @@
 import get from 'lodash/get';
 import forEach from 'lodash/forEach';
+import kebabCase from 'lodash/kebabCase';
+import assign from 'lodash/assign';
 import registry from './registerComponent';
+import attachDomEvents from './domEvents';
 
 const getHtmlFromVDom = (vdom, parentNode, context) => {
     let isEvent = /^on/;
@@ -19,7 +22,11 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
                 }
             }
         }
-        node = new _component(vdom.props);
+        let nodeConstructor = new _component(vdom.props);        
+        node = document.createElement(kebabCase(nodeConstructor.constructor.name));
+        nodeConstructor.parentElement = parentNode;
+        nodeConstructor.localName = node.localName;
+        assign(node, nodeConstructor);
     } else if (!node) {
         node = document.createElement(vdom.type);
         node._vdom = vdom;
@@ -66,7 +73,12 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
             }
         }
     }
-    parentNode.appendChild(node);
+    attachDomEvents(node);
+    if(parentNode.hasOwnProperty('isLiteElement')) {
+        document.querySelector(kebabCase(parentNode.constructor.name)).appendChild(node);
+    } else {
+        parentNode.appendChild(node);
+    }
 }
 
 export default getHtmlFromVDom;

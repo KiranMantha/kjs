@@ -5,7 +5,8 @@ export default class RouterView extends Component {
         super();
     }
 
-    onMount() {        
+    ComponentOnMount() {
+        debugger;    
         this._vdom.children = this.parentElement._vdom.children.filter((vnode)=>{
             if(vnode.type === this.localName) {
                 return vnode;
@@ -15,9 +16,6 @@ export default class RouterView extends Component {
     }
 
     render(){
-        return `
-        <slot></slot>
-        <div></div>
-        `;
+        return '<div></div>';
     }
 }

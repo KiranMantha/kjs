@@ -18,18 +18,18 @@ const registry = (() => {
             }
         });
 
-        if(window.customElements) {
-            for(let regComp in _registry) {
-                customElements.define(regComp.substring(4), _registry[regComp]);
-            }
-        } else {
+        // if(window.customElements) {
+        //     for(let regComp in _registry) {
+        //         customElements.define(regComp.substring(4), _registry[regComp]);
+        //     }
+        // } else {
             // _loadScript('./polyfill.js').then(e => {
             //     // Polyfill loaded.
             //     for(let regComp in _registry) {
             //         customElements.define(regComp.substring(4), _registry[regComp]);
             //     }
             // });
-        }
+        //}
     }
 
     let _loadScript = (src) => {

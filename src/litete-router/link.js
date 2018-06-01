@@ -1,6 +1,8 @@
 //router-link
 
-import { Component } from '../litete';
+import {
+    Component
+} from '../litete';
 
 export default class RouterLink extends Component {
     constructor(props) {
@@ -12,10 +14,10 @@ export default class RouterLink extends Component {
     }
 
     render() {
-        return `<a href="#" 
-        rel="{ props.path }" 
+        return (`<a href="#${ this.props.path }" 
+        rel="${ this.props.path }" 
         onclick="loadRoute.bind(null, '${ this.props.path }', '${ this.props.render }')">
         ${ this.props.displayName }
-        </a>`
+        </a>`);
     }
 }

@@ -22,7 +22,7 @@ export default class TestElem extends Component {
     }).join('');
   }
 
-  onMount() {
+  ComponentOnMount() {
     // return if making api calls
     return this.loadUsers();
 
