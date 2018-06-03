@@ -1,5 +1,8 @@
-import { Component } from '../litete';
+import { Meta, Component } from '../litete';
 
+@Meta({
+  selector: 'test-ele'
+})
 export default class TestEle extends Component {
   greeting = 'Hello';
   greeetingTest = 'Greeting from parent component';

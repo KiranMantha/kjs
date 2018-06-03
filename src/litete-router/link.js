@@ -1,9 +1,12 @@
 //router-link
 
 import {
-    Component
+    Meta, Component
 } from '../litete';
 
+@Meta({
+    selector: 'router-link'
+})
 export default class RouterLink extends Component {
     constructor(props) {
         super(props);

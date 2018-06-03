@@ -9,14 +9,19 @@ const registry = (() => {
         return get(_registry, `lte.${componentName}`, null);
     }
 
-    let _set = (...args) => {
-        forEach(args, (component) => {
-            let compName = kebabCase(component.name);
-            let name = `lte.${compName}`;
-            if (!_registry[name]) {
-                _registry[name] = component;
-            }
-        });
+    let _set = (tag, component) => {
+        let name = `lte.${tag}`;
+        if (!_registry[name]) {
+            _registry[name] = component;
+        }
+        
+        // forEach(args, (component) => {
+        //     let compName = kebabCase(component.name);
+        //     let name = `lte.${compName}`;
+        //     if (!_registry[name]) {
+        //         _registry[name] = component;
+        //     }
+        // });
 
         // if(window.customElements) {
         //     for(let regComp in _registry) {

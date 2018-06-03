@@ -1,5 +1,8 @@
-import { Component } from '../litete';
+import { Meta, Component } from '../litete';
 
+@Meta({
+    selector: 'router-view'
+})
 export default class RouterView extends Component {
     constructor(){
         super();

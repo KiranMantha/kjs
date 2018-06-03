@@ -1,5 +1,8 @@
-import { Component } from '../litete';
+import { Meta, Component } from '../litete';
 
+@Meta({
+  selector: 'test-elem'
+})
 export default class TestElem extends Component {
   constructor(props) {
     super(props);
