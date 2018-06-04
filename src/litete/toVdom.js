@@ -9,7 +9,7 @@ const createVDom = (...args) => {
     vdom.props[attr.name] = attr.value;
   }
 
-  vdom.type = node.nodeName;
+  vdom.type = node.nodeName || node.localName;
 
   /*
     Node.ELEMENT_NODE	1	An Element node such as <p> or <div>.

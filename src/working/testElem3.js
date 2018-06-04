@@ -9,6 +9,15 @@ export default class TestElemt extends Component {
   }
 
   render() {
-    return `<div>test elem3</div>`;
+    return `
+      <router-view>
+        <div>
+          <ul>
+            <li><router-link path='/home' displayName='router link1' render='TestElemt'></router-link></li>
+            <li><router-link path='/test' displayName='router link2' render='TestElem'></router-link></li>
+          </ul>
+        </div>
+      </router-view>
+    `;
   }
 }

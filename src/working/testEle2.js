@@ -44,7 +44,12 @@ export default class TestElem extends Component {
         ${ this.ht }
       </ul>
       <router-view>
-        <router-link path='/home' displayName='router link1' render='TestElemt'></router-link>
+        <div>
+          <ul>
+            <li><router-link path='/home' displayName='router link1' render='TestElemt'></router-link></li>
+            <li><router-link path='/test' displayName='router link2' render='TestElem'></router-link></li>
+          </ul>
+        </div>
       </router-view>
     </div>`);
   }

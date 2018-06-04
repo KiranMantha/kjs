@@ -1,19 +1,33 @@
 //router-link
-
-import {
-    Meta, Component
-} from '../litete';
+import { Meta, Component } from '../litete';
+import get from 'lodash/get';
 
 @Meta({
     selector: 'router-link'
 })
 export default class RouterLink extends Component {
+    routerView ;
     constructor(props) {
         super(props);
     }
 
+    ComponentOnMount() {
+        this._getRouterView(this.parentElement);
+        if(!this.routerView) {
+            throw('RouterLink should be the child of RouterView');
+        }
+    }
+
+    _getRouterView = (parentEle) => {
+        if(parentEle.component) {
+            this.routerView = parentEle;
+        } else {
+            this._getRouterView(parentEle.parentElement);
+        }
+    }
+
     loadRoute = (...args) => {
-        console.log(args);
+        this.routerView.renderView(args);
     }
 
     render() {

@@ -9,13 +9,26 @@ export default class Component {
   props = {};
   parentElement = {};
   localName = '';
+  host;
+  _htmlref;
 
   constructor(props) {
     this._vdom = new VDOM();
     this.props = props;
-    this.isLiteElement = false;
+    this.isLiteElement = true;
+    this._htmlref = {};
     this.onMount = this.onMount.bind(this);
     this.onUnMount = this.onUnMount.bind(this);
+    this.setHTMLRef = this.setHTMLRef.bind(this);
+    this.getHTMLRef = this.getHTMLRef.bind(this);
+  }
+
+  setHTMLRef = (node) => {
+    this._htmlref = node;
+  }
+
+  getHTMLRef = () => {
+    return this._htmlref;
   }
 
   _getVDom = () => {
@@ -24,8 +37,20 @@ export default class Component {
   }
 
   _compile = () => {
-    this._getVDom();
-    getHtmlFromVDom(this._vdom, this, this);
+    if(typeof this._config.template === 'string') {
+      this._getVDom();
+      getHtmlFromVDom(this._vdom, this._htmlref, this);
+    } else {
+      if(this._config.template.splice) {
+        for (let vdom of this._config.template) { 
+          getHtmlFromVDom(vdom, this._htmlref, this);
+        }        
+      }
+    }
+    
+    if(this.ComponentDidMount) {
+      return this.ComponentDidMount();
+    }
   }
 
   _callComponentOnMount = async () => {
@@ -33,7 +58,7 @@ export default class Component {
       return this.ComponentOnMount();
     }
     return true;
-  } 
+  }
 
   // Fires when custom element binds to DOM
   onMount() {

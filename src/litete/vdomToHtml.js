@@ -11,6 +11,7 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
     let hasBind = /.bind(.*?)/g;
     let match;
     let node;
+    let nodeConstructor;
     let _component = registry.getComponent(vdom.type);
     if (_component && typeof _component === 'function') {
         for (let prop in vdom.props) {
@@ -22,11 +23,12 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
                 }
             }
         }
-        let nodeConstructor = new _component(vdom.props);        
+        nodeConstructor = new _component(vdom.props);
         node = document.createElement(kebabCase(nodeConstructor.constructor.name));
         nodeConstructor.parentElement = parentNode;
         nodeConstructor.localName = node.localName;
         assign(node, nodeConstructor);
+        nodeConstructor.setHTMLRef(node);
     } else if (!node) {
         node = document.createElement(vdom.type);
         node._vdom = vdom;
@@ -74,11 +76,7 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
         }
     }
     attachDomEvents(node);
-    if(parentNode.hasOwnProperty('isLiteElement')) {
-        document.querySelector(kebabCase(parentNode.constructor.name)).appendChild(node);
-    } else {
-        parentNode.appendChild(node);
-    }
+    parentNode.appendChild(node);
 }
 
 export default getHtmlFromVDom;

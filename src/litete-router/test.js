@@ -4,21 +4,16 @@ import { Meta, Component } from '../litete';
     selector: 'router-view'
 })
 export default class RouterView extends Component {
-    constructor(){
-        super();
+    constructor(props) {
+        super(props);
+        this.component = this;
     }
 
-    ComponentOnMount() {
-        debugger;    
-        this._vdom.children = this.parentElement._vdom.children.filter((vnode)=>{
-            if(vnode.type === this.localName) {
-                return vnode;
-            }
-        })[0].children;
-        console.log('routerview vdom', this._vdom);
+    renderView = (...args) => {
+        console.log('Args from routerview', args);
     }
 
-    render(){
-        return '<div></div>';
+    render() {
+        return this.props.children;
     }
 }
