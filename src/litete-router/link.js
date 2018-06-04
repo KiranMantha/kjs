@@ -6,23 +6,26 @@ import get from 'lodash/get';
     selector: 'router-link'
 })
 export default class RouterLink extends Component {
-    routerView ;
+    routerView;
     constructor(props) {
         super(props);
     }
 
     ComponentOnMount() {
         this._getRouterView(this.parentElement);
-        if(!this.routerView) {
-            throw('RouterLink should be the child of RouterView');
+        if (!this.routerView) {
+            throw Error('RouterLink should be the child of RouterView');
         }
     }
 
     _getRouterView = (parentEle) => {
-        if(parentEle.component) {
-            this.routerView = parentEle;
-        } else {
-            this._getRouterView(parentEle.parentElement);
+        if (parentEle) {
+            if (parentEle.component) {
+                this.routerView = parentEle;
+                return;
+            } else {
+                this._getRouterView(parentEle.parentElement);
+            }
         }
     }
 
@@ -31,10 +34,10 @@ export default class RouterLink extends Component {
     }
 
     render() {
-        return (`<a href="#${ this.props.path }" 
-        rel="${ this.props.path }" 
-        onclick="loadRoute.bind(null, '${ this.props.path }', '${ this.props.render }')">
-        ${ this.props.displayName }
+        return (`<a href="#${this.props.path}" 
+        rel="${ this.props.path}" 
+        onclick="loadRoute.bind(null, '${ this.props.path}', '${this.props.render}')">
+        ${ this.props.displayName}
         </a>`);
     }
 }

@@ -68,7 +68,7 @@ export default class Component {
         this._compile();
       });
     } else {
-      throw ('Render is not defined in the component ' + this.constructor.name);
+      throw Error('Render is not defined in the component ' + this.constructor.name);
     }
   }
 
