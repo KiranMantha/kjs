@@ -46,7 +46,7 @@ export default class TestElem extends Component {
         <div>
           <ul>
             <li><router-link path='/home' displayName='router link1' render='TestElement'></router-link></li>
-            <li><router-link path='/test' displayName='router link2' render='TestElement'></router-link></li>
+            <li><router-link path='/test' displayName='router link2' render='TestElem'></router-link></li>
           </ul>
           <router-outlet></router-outlet>
         </div>
