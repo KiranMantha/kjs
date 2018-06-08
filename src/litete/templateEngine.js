@@ -3,69 +3,59 @@ import createVDom from './toVdom';
 import getHtmlFromVDom from './vdomToHtml';
 import attachDomEvents from './domEvents';
 
+function getVDom() {
+  let node = (new DOMParser()).parseFromString(this._config.template, 'application/xml').children[0];
+  this._vdom = createVDom(node, this._vdom.children);
+}
+
+async function callComponentOnMount() {
+  if (this.ComponentOnMount) {
+    return this.ComponentOnMount();
+  }
+  return true;
+}
+
+function compile() {
+  if (this._config.template) {
+    if (typeof this._config.template === 'string') {
+      getVDom.call(this);
+      getHtmlFromVDom(this._vdom, this.domRef, this);
+    } else if (this._config.template.splice) {
+      for (let vdom of this._config.template) {
+        getHtmlFromVDom(vdom, this.domRef, this);
+      }
+    }
+  }
+
+  if (this.ComponentDidMount) {
+    return this.ComponentDidMount();
+  }
+}
+
 export default class Component {
   _vdom = {};
   _config = {};
   props = {};
-  parentElement = {};
+  context = {};
   localName = '';
-  host;
-  _htmlref;
+  domRef;
 
   constructor(props) {
     this._vdom = new VDOM();
     this.props = props;
     this.isLiteElement = true;
-    this._htmlref = {};
+    this.domRef = {};
+    this.context = {};
     this.onMount = this.onMount.bind(this);
     this.onUnMount = this.onUnMount.bind(this);
-    this.setHTMLRef = this.setHTMLRef.bind(this);
-    this.getHTMLRef = this.getHTMLRef.bind(this);
-  }
-
-  setHTMLRef = (node) => {
-    this._htmlref = node;
-  }
-
-  getHTMLRef = () => {
-    return this._htmlref;
-  }
-
-  _getVDom = () => {
-    let node = (new DOMParser()).parseFromString(this._config.template, 'application/xml').children[0];
-    this._vdom = createVDom(node, this._vdom.children);
-  }
-
-  _compile = () => {
-    if(typeof this._config.template === 'string') {
-      this._getVDom();
-      getHtmlFromVDom(this._vdom, this._htmlref, this);
-    } else {
-      if(this._config.template.splice) {
-        for (let vdom of this._config.template) { 
-          getHtmlFromVDom(vdom, this._htmlref, this);
-        }        
-      }
-    }
-    
-    if(this.ComponentDidMount) {
-      return this.ComponentDidMount();
-    }
-  }
-
-  _callComponentOnMount = async () => {
-    if(this.ComponentOnMount) {
-      return this.ComponentOnMount();
-    }
-    return true;
   }
 
   // Fires when custom element binds to DOM
   onMount() {
     if (this.render) {
-      this._callComponentOnMount().then(() => { 
+      callComponentOnMount.call(this).then(() => {
         this._config.template = this.render();
-        this._compile();
+        compile.call(this);
       });
     } else {
       throw Error('Render is not defined in the component ' + this.constructor.name);

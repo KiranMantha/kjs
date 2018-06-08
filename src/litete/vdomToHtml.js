@@ -24,8 +24,8 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
         }
         let compFactry = ComponentFactory.createComponentNode(_component, vdom.props);
         nodeConstructor = compFactry.nodeConstructor;
-        nodeConstructor.parentElement = parentNode;
         node = compFactry.node;
+        nodeConstructor.context = context;
     } else if (!node) {
         node = document.createElement(vdom.type);
         node._vdom = vdom;

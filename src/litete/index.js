@@ -1,7 +1,7 @@
 import Component from './templateEngine';
 import render from './render';
 import registry from './registerComponent';
-import EventManager from './event-manager';
+import EventManager from './eventManager';
 import { Meta } from './decorators';
  
 export {

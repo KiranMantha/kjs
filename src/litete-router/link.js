@@ -6,31 +6,17 @@ import get from 'lodash/get';
     selector: 'router-link'
 })
 export default class RouterLink extends Component {
-    routerView;
     constructor(props) {
         super(props);
     }
 
     ComponentOnMount() {
-        this._getRouterView(this.parentElement);
-        if (!this.routerView) {
+        if(!this.context.router)
             throw Error('RouterLink should be the child of RouterView');
-        }
     }
 
-    _getRouterView = (parentEle) => {
-        if (parentEle) {
-            if (parentEle.component) {
-                this.routerView = parentEle;
-                return;
-            } else {
-                this._getRouterView(parentEle.parentElement);
-            }
-        }
-    }
-
-    loadRoute = (...args) => {
-        this.routerView.renderView(args);
+    loadRoute = (to, render) => {
+        this.context.router.renderView({to, render});
     }
 
     render() {

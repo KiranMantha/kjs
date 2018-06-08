@@ -7,7 +7,7 @@ export default class ComponentFactory {
         let node = document.createElement(kebabCase(nodeConstructor.constructor.name));
         nodeConstructor.localName = node.localName;
         assign(node, nodeConstructor);
-        nodeConstructor.setHTMLRef(node);
+        nodeConstructor.domRef = node;
         return { node, nodeConstructor };
     }
 }

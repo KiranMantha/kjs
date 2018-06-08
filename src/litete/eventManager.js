@@ -1,7 +1,8 @@
-const EventManager = new(function () {
+const EventManager = new (function () {
     var events = {};
 
     this.subscribe = function (name, handler) {
+        console.log(events);
         if (!events[name]) {
             events[name] = [];
         }
@@ -9,6 +10,7 @@ const EventManager = new(function () {
     }
 
     this.publish = function (name, data) {
+        console.log(events);
         var listeners = events[name];
         if (listeners) {
             listeners.forEach(function (fn) {
@@ -35,4 +37,4 @@ const EventManager = new(function () {
 //     eventEmitter.unsubscribe('btnClick');
 //   }, 1000);
 
-export default EventManager
+export default EventManager;
