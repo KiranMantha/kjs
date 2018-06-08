@@ -11,7 +11,7 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
     let match;
     let node;
     let nodeConstructor;
-    let _component = registry.getComponent(vdom.type);
+    let _component = registry.getComponent(vdom.type.toLowerCase());
     if (_component && typeof _component === 'function') {
         for (let prop in vdom.props) {
             if (prop !== 'children') {

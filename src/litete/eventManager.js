@@ -10,7 +10,6 @@ const EventManager = new (function () {
     }
 
     this.publish = function (name, data) {
-        console.log(events);
         var listeners = events[name];
         if (listeners) {
             listeners.forEach(function (fn) {
