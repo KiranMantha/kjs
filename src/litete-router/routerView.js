@@ -11,7 +11,6 @@ export default class RouterView extends Component {
     }
 
     renderView = (linkDetails) => {
-        console.log('Args from routerview', linkDetails);
         EventManager.publish(ROUTER_EVENTS.LOAD_ROUTE, linkDetails);
     }
 

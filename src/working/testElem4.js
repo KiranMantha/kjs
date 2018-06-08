@@ -8,6 +8,14 @@ export default class TestElement extends Component {
     super(props);
   }
 
+  ComponentOnMount() {
+      console.log(`${ this.localName } got loaded`);
+  }
+
+  ComponentOnUnMount() {
+      console.log(`${ this.localName } got unloaded`);
+  }
+
   render() {
     return `<div> 
       test element ${ this.props.to }

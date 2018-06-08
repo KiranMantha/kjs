@@ -10,7 +10,6 @@ export default class TestElem extends Component {
 
   sayHello = (e) => {
     alert(this.props.greeetingTest);
-    console.log(this.props);
   }
 
   alert = (userName) => {

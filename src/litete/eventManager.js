@@ -2,7 +2,6 @@ const EventManager = new (function () {
     var events = {};
 
     this.subscribe = function (name, handler) {
-        console.log(events);
         if (!events[name]) {
             events[name] = [];
         }

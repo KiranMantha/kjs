@@ -13,7 +13,6 @@ export default class TestEle extends Component {
 
   sayHello = (e) => {
     alert(this.greeting);
-    console.log(this.props);
   }
 
   render() {
