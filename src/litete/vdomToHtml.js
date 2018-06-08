@@ -1,9 +1,8 @@
 import get from 'lodash/get';
 import forEach from 'lodash/forEach';
-import kebabCase from 'lodash/kebabCase';
-import assign from 'lodash/assign';
 import registry from './registerComponent';
 import attachDomEvents from './domEvents';
+import ComponentFactory from './componentFactory';
 
 const getHtmlFromVDom = (vdom, parentNode, context) => {
     let isEvent = /^on/;
@@ -23,12 +22,10 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
                 }
             }
         }
-        nodeConstructor = new _component(vdom.props);
-        node = document.createElement(kebabCase(nodeConstructor.constructor.name));
+        let compFactry = ComponentFactory.createComponentNode(_component, vdom.props);
+        nodeConstructor = compFactry.nodeConstructor;
         nodeConstructor.parentElement = parentNode;
-        nodeConstructor.localName = node.localName;
-        assign(node, nodeConstructor);
-        nodeConstructor.setHTMLRef(node);
+        node = compFactry.node;
     } else if (!node) {
         node = document.createElement(vdom.type);
         node._vdom = vdom;
