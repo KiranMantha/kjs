@@ -39,6 +39,7 @@ export default class Component {
   context = {};
   localName = '';
   domRef;
+  state;
 
   constructor(props) {
     this._vdom = new VDOM();
@@ -46,6 +47,7 @@ export default class Component {
     this.isLiteElement = true;
     this.domRef = {};
     this.context = {};
+    this.state = {};
     this.onMount = this.onMount.bind(this);
     this.onUnMount = this.onUnMount.bind(this);
   }

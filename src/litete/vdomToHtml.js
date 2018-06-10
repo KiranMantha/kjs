@@ -11,6 +11,7 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
     let match;
     let node;
     let nodeConstructor;
+    if(!context) context = {};
     let _component = registry.getComponent(vdom.type.toLowerCase());
     if (_component && typeof _component === 'function') {
         for (let prop in vdom.props) {
@@ -22,10 +23,8 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
                 }
             }
         }
-        let compFactry = ComponentFactory.createComponentNode(_component, vdom.props);
-        nodeConstructor = compFactry.nodeConstructor;
+        let compFactry = ComponentFactory.createComponentNode(_component, vdom.props, context);
         node = compFactry.node;
-        nodeConstructor.context = context;
     } else if (!node) {
         node = document.createElement(vdom.type);
         node._vdom = vdom;

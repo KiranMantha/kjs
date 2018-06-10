@@ -5,25 +5,24 @@ export default function attachDomEvents(targetNode) {
             if (mutation.type === 'childList') {
                 if (mutation.addedNodes.length > 0) {
                     mutation.addedNodes.forEach((node) => {
-                        if(node.onMount) {
+                        if (node.onMount) {
                             node.onMount();
                         } else {
                             let notRegEles = node.querySelectorAll(':not(:defined)');
-                            notRegEles.forEach((node)=>{
+                            notRegEles.forEach((node) => {
                                 node.onMount();
                             });
-                        }
+                        }                        
                     });
                 } else if (mutation.removedNodes.length > 0) {
                     mutation.removedNodes.forEach((node) => {
-                        if(node.onUnMount) {
+                        if (node.onUnMount) {
                             node.onUnMount();
-                        } else {
-                            let notRegEles = node.querySelectorAll(':not(:defined)');
-                            notRegEles.forEach((node)=>{
-                                node.onUnMount();
-                            });
                         }
+                        let notRegEles = node.querySelectorAll(':not(:defined)');
+                        notRegEles.forEach((node) => {
+                            node.onUnMount();
+                        });
                     });
                 }
             }

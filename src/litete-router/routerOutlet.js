@@ -1,5 +1,5 @@
 //router-link
-import { Meta, Component, EventManager, createVDom, getHtmlFromVDom } from '../litete';
+import { Meta, Component, EventManager, registry, ComponentFactory } from '../litete';
 import get from 'lodash/get';
 import kebabCase from 'lodash/kebabCase';
 import ROUTER_EVENTS from './routerEvents';
@@ -11,6 +11,7 @@ export default class RouterOutlet extends Component {
     constructor(props) {
         super(props);
         EventManager.subscribe(ROUTER_EVENTS.LOAD_ROUTE, (data) => {
+            debugger;
             this.renderComponent(data);
         });
     }
@@ -25,15 +26,14 @@ export default class RouterOutlet extends Component {
     }
 
     renderComponent = (data) => {
+        debugger;        
         this.domRef.childNodes.forEach((element) => {
             element.remove();
         });
-        let node = document.createElement(kebabCase(data.render));
-        let vdom = createVDom(node);
-        vdom.props = {
+        let props = {
             'to': data.to
-        }
-        getHtmlFromVDom(vdom, this.domRef, this);
+        };
+        let node = ComponentFactory.createNode(data.render, props, this.domRef);
     }
 
     render() {
