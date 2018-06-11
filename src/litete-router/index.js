@@ -1,9 +1,9 @@
 import RouterLink from './link';
 import RouterView from './routerView';
-import RouterOutlet from './routerOutlet';
+import Route from './route';
 
 export {
     RouterLink,
     RouterView,
-    RouterOutlet
+    Route
 }

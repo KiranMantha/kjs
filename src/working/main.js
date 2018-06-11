@@ -1,5 +1,5 @@
 import { render } from '../litete';
-import { RouterLink, RouterView, RouterOutlet } from '../litete-router';
+import { RouterLink, RouterView, Route } from '../litete-router';
 import TestEle from './testEle';
 import TestElem from './testEle2';
 import TestElemt from './testElem3';

@@ -24,7 +24,6 @@ export default class RouterOutlet extends Component {
             this.setState({
                 data: data
             });
-            //this.renderComponent(data);
         });
     }
 

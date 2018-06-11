@@ -5,7 +5,9 @@ import { Meta, Component } from '../litete';
 })
 export default class TestEle extends Component {
   greeting = 'Hello';
-  greeetingTest = 'Greeting from parent component';
+  greeetingTest = { 
+    greet: 'Greeting from parent component'
+  };
 
   constructor(props) {
     super(props);

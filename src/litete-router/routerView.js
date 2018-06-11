@@ -1,4 +1,5 @@
 import { Meta, Component, EventManager } from '../litete';
+import pathToRegexp from 'path-to-regexp';
 import ROUTER_EVENTS from './routerEvents';
 
 @Meta({
@@ -11,7 +12,7 @@ export default class RouterView extends Component {
     }
 
     renderView = (linkDetails) => {
-        EventManager.publish(ROUTER_EVENTS.LOAD_ROUTE, linkDetails);
+        EventManager.publish(linkDetails.path, linkDetails);
     }
 
     render() {

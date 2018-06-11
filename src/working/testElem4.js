@@ -18,7 +18,7 @@ export default class TestElement extends Component {
 
   render() {
     return `<div> 
-      test element ${ this.props.to }
+      test element ${ this.props.match.to }
     </div>`;
   }
 }

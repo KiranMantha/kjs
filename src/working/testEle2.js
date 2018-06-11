@@ -37,7 +37,7 @@ export default class TestElem extends Component {
   render() {
     const { greeetingTest } = this.props;
     return(`<div> 
-      ${ greeetingTest }
+      ${ greeetingTest.greet }
       <button onclick='sayHello'>click</button>
       <ul>
         ${ this.ht }
@@ -45,10 +45,11 @@ export default class TestElem extends Component {
       <router-view>
         <div>
           <ul>
-            <li><router-link path='/home' displayName='router link1' render='TestElement'></router-link></li>
-            <li><router-link path='/test' displayName='router link2' render='TestElem'></router-link></li>
+            <li><router-link path='/home' displayName='router link1'></router-link></li>
+            <li><router-link path='/test' displayName='router link2'></router-link></li>
           </ul>
-          <router-outlet></router-outlet>
+          <route path='/home' render='TestElement'></route>
+          <route path='/test' render='TestElement'></route>
         </div>
       </router-view>
     </div>`);

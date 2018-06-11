@@ -15,8 +15,8 @@ export default class RouterLink extends Component {
             throw Error('RouterLink should be the child of RouterView');
     }
 
-    loadRoute = (to, render) => {
-        this.context.router.renderView({to, render});
+    loadRoute = (path, render) => {
+        this.context.router.renderView({path, render});
     }
 
     render() {

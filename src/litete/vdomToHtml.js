@@ -1,8 +1,26 @@
+import { findFirst } from 'obj-traverse/lib/obj-traverse';
 import get from 'lodash/get';
 import forEach from 'lodash/forEach';
 import registry from './registerComponent';
 import attachDomEvents from './domEvents';
 import ComponentFactory from './componentFactory';
+
+function traverse(json, keyName) {
+    let value = '';
+    if (Array.isArray(json)) {
+        json.forEach(traverse);
+    } else if (typeof json === 'object') {
+        Object.keys(json).forEach(function(key) {
+            if (key === keyName) {
+                value = json[key];
+                return;
+            } else {
+               traverse(json[key]);
+            }
+        });
+    }
+    return value;
+};
 
 const getHtmlFromVDom = (vdom, parentNode, context) => {
     let isEvent = /^on/;
@@ -20,19 +38,22 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
         for (let prop in vdom.props) {
             if (prop !== 'children') {
                 let listener;
+                let propValue = vdom.props[prop];
                 if (prop.match(isEvent)) {
-                    if (match = hasBind.exec(vdom.props[prop])) {
-                        listener = (new Function('context', `return context.${vdom.props[prop]}`))(context);
+                    if (match = hasBind.exec(propValue)) {
+                        //listener = (new Function('context', 'prop', 'traverse', `return traverse(context, prop)`))(context, `${vdom.props[prop]}`, traverse);
+                        listener = (new Function('context', `return context.${propValue}`))(context);
                     } else {
-                        listener = context[vdom.props[prop]]
+                        listener = context[propValue]
                     }
                     node.addEventListener(prop.substring(2), listener, false);
-                } else if (match = isExpression.exec(vdom.props[prop])) {
+                } else if (match = isExpression.exec(propValue)) {
                     let _value = get(context, match[1].trim(), '');
-                    vdom.props[prop] = _value;
-                    node.setAttribute(prop, vdom.props[prop]);
+                    //let _value = traverse(context, match[1].trim());
+                    propValue = _value;
+                    node.setAttribute(prop, propValue);
                 } else {
-                    node.setAttribute(prop, vdom.props[prop]);
+                    node.setAttribute(prop, propValue);
                 }
             }
         }
@@ -58,7 +79,7 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
                 getHtmlFromVDom(child, node, context);
             }
         }
-
+        if(parentNode.contains(node)) parentNode.removeChild(node);
         attachDomEvents(node);
         parentNode.appendChild(node);
     }    

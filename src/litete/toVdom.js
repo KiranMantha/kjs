@@ -5,8 +5,12 @@ const createVDom = (...args) => {
   let node = args[0];
   let children = args[1];
 
-  for (let attr of node.attributes) {
-    vdom.props[attr.name] = attr.value;
+  if (node.attributes.length > 0) {
+    for (let attr of node.attributes) {
+      vdom.props[attr.name] = attr.value;
+    }
+  } else {
+    vdom.props = node.props || {};
   }
 
   vdom.type = node.nodeName || node.localName;

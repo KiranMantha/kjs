@@ -22,6 +22,7 @@ function createNode(component, vdom, parentNode, context) {
     assign(node, nodeConstructor);
     nodeConstructor.domRef = node;
     nodeConstructor.context = context || {};
+    if(parentNode.contains(node)) parentNode.removeChild(node);
     attachDomEvents(node);
     parentNode.appendChild(node);
 }
@@ -42,10 +43,8 @@ export default class ComponentFactory {
     }
 
     static createElement = (nodeName, props) => {
-        let node = document.createElement(nodeName);
-        for (let prop in props) {
-            node.setAttribute(prop, props[prop]);
-        }
+        let node = document.createElement(kebabCase(nodeName));
+        node.props = props;
         return node;
     }
 }

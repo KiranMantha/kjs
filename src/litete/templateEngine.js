@@ -61,10 +61,13 @@ export default class Component {
     } else if (typeof arg === 'function') {
 
     }
-
-    this.onMount();
-
     if (callback) callback();
+    this.onMount();
+  }
+
+  //Force Update
+  forceUpdate = () => {
+    this.onMount();
   }
 
   // Fires when custom element binds to DOM
