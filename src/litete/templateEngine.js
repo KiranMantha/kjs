@@ -16,15 +16,17 @@ async function callComponentOnMount() {
 }
 
 function compile() {
-  if (this._config.template) {
-    if (typeof this._config.template === 'string') {
-      getVDom.call(this);
-      getHtmlFromVDom(this._vdom, this.domRef, this);
-    } else if (this._config.template.splice) {
-      for (let vdom of this._config.template) {
-        getHtmlFromVDom(vdom, this.domRef, this);
-      }
+  let template = this._config.template;
+  if (typeof template === 'string') {
+    getVDom.call(this);
+    getHtmlFromVDom(this._vdom, this.domRef, this);
+  } else if (template.splice) {
+    for (let vdom of template) {
+      getHtmlFromVDom(vdom, this.domRef, this);
     }
+  } else if (typeof template === 'object') {
+    this._vdom = createVDom(template, this._vdom.children);
+    getHtmlFromVDom(this._vdom, this.domRef, this);
   }
 
   if (this.ComponentDidMount) {
@@ -52,12 +54,25 @@ export default class Component {
     this.onUnMount = this.onUnMount.bind(this);
   }
 
+  setState = (arg, callback) => {
+    console.log('setState called');
+    if (typeof arg === 'object') {
+      this.state = Object.assign({}, this.state, arg);
+    } else if (typeof arg === 'function') {
+
+    }
+
+    this.onMount();
+
+    if (callback) callback();
+  }
+
   // Fires when custom element binds to DOM
   onMount() {
     if (this.render) {
       callComponentOnMount.call(this).then(() => {
         this._config.template = this.render();
-        compile.call(this);
+        if(this._config.template) compile.call(this);
       });
     } else {
       throw Error('Render is not defined in the component ' + this.constructor.name);

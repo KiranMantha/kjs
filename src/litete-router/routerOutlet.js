@@ -1,5 +1,11 @@
 //router-link
-import { Meta, Component, EventManager, registry, ComponentFactory } from '../litete';
+import {
+    Meta,
+    Component,
+    EventManager,
+    registry,
+    ComponentFactory
+} from '../litete';
 import get from 'lodash/get';
 import kebabCase from 'lodash/kebabCase';
 import ROUTER_EVENTS from './routerEvents';
@@ -10,9 +16,15 @@ import ROUTER_EVENTS from './routerEvents';
 export default class RouterOutlet extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            data: null
+        }
         EventManager.subscribe(ROUTER_EVENTS.LOAD_ROUTE, (data) => {
             debugger;
-            this.renderComponent(data);
+            this.setState({
+                data: data
+            });
+            //this.renderComponent(data);
         });
     }
 
@@ -25,18 +37,21 @@ export default class RouterOutlet extends Component {
         EventManager.unsubscribe(ROUTER_EVENTS.LOAD_ROUTE);
     }
 
-    renderComponent = (data) => {
-        debugger;        
-        this.domRef.childNodes.forEach((element) => {
-            element.remove();
-        });
-        let props = {
-            'to': data.to
-        };
-        let node = ComponentFactory.createNode(data.render, props, this.domRef);
+    renderComponent = () => {
+        debugger;
+        if (this.state.data) {
+            this.domRef.childNodes.forEach((element) => {
+                element.remove();
+            });
+            let props = {
+                'to': this.state.data.to
+            };
+            return ComponentFactory.createElement(kebabCase(this.state.data.render), props);
+        }
+        return null;
     }
 
     render() {
-        return null;
+        return this.renderComponent();
     }
 }

@@ -9,24 +9,12 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
     let isExpression = /{([^{}]+)}/g;
     let hasBind = /.bind(.*?)/g;
     let match;
-    let node;
-    let nodeConstructor;
     if(!context) context = {};
-    let _component = registry.getComponent(vdom.type.toLowerCase());
-    if (_component && typeof _component === 'function') {
-        for (let prop in vdom.props) {
-            if (prop !== 'children') {
-                let value = vdom.props[prop];
-                if (match = isExpression.exec(value)) {
-                    let _value = get(context, match[1].trim(), '');
-                    vdom.props[prop] = _value;
-                }
-            }
-        }
-        let compFactry = ComponentFactory.createComponentNode(_component, vdom.props, context);
-        node = compFactry.node;
-    } else if (!node) {
-        node = document.createElement(vdom.type);
+    
+    let nodeCreated = ComponentFactory.createComponentNode(null, vdom, parentNode, context);
+
+    if (!nodeCreated) {
+        let node = document.createElement(vdom.type);
         node._vdom = vdom;
         //Add properties
         for (let prop in vdom.props) {
@@ -70,9 +58,10 @@ const getHtmlFromVDom = (vdom, parentNode, context) => {
                 getHtmlFromVDom(child, node, context);
             }
         }
-    }
-    attachDomEvents(node);
-    parentNode.appendChild(node);
+
+        attachDomEvents(node);
+        parentNode.appendChild(node);
+    }    
 }
 
 export default getHtmlFromVDom;
