@@ -3,11 +3,13 @@ function sampletemp() {
     return (`
         <div>
             <p>My Name is {{ name }}</p>
-            <p &click=''>My Age is {{ age }}</p>
+            <p click='greet'>My Age is {{ age }}</p>
             <p>My Skills are</p>
-            <ul>
-                <li for='let skill in skills'>{{ skill }}</li>
-            </ul>
+            <table>
+                <tr data-for='skill in skills'>
+                    <td>{{ skill.data }}</td>
+                </tr>
+            </table>
         </div>
     `);
 }
@@ -15,7 +17,16 @@ var context = {
     data: {
         name: 'Hello World!!',
         age: 25,
-        skills: ['html', 'css', 'javascript']
+        skills: [
+            {data: 'html'},
+            {data: 'css'},
+            {data:'javascript'}
+        ]
+        // skills: [
+        //     'html', 
+        //     'css', 
+        //     'javascript'
+        // ]
     },
     methods: {
         greet: function() {
@@ -23,6 +34,6 @@ var context = {
         }
     }
 };
-var tpl = document.getElementById('sampleTpl').innerHTML;
-var template = liteTE.compile(tpl, 'div');
-var html = template.bindContext(context);
+// var tpl = document.getElementById('sampleTpl').innerHTML;
+// var template = liteTE.compile(tpl, 'div');
+// var html = template.bindContext(context);

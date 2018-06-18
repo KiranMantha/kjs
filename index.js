@@ -1,18 +1,3 @@
-/**
-  var match = expression
-  .match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+as\s+([\s\S]+?))?(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
-
-if (!match) {
-throw Error('iexp', 'Expected expression in form of \'_item_ in _collection_[ track by _id_]\' but got \'{0}\'.',
-	expression);
-}
-
-var lhs = match[1];
-var rhs = match[2];
-var aliasAs = match[3];
-var trackByExp = match[4];
- */
-
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
