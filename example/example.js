@@ -3,7 +3,7 @@ function sampletemp() {
     return (`
         <div>
             <p>My Name is {{ name }}</p>
-            <p click='greet'>My Age is {{ age }}</p>
+            <p lc-click='greet'>My Age is {{ age }}</p>
             <p>My Skills are</p>
             <table>
                 <tr data-for='skill in skills'>
