@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="../index.js"></script>    
+    <script src="../test.js"></script>
+    <script src="example.js"></script>
+    <script>
+        var hellow = 'hi';
+    </script>    
     <title>Document</title>
 </head>
 <body>
     <div></div>
+    <l-c data-context='context' data-templateref='sampletemp()'></l-c>
     <script id="sampleTpl" type="text/lite-te">
         <div>
             <p>My Name is {{ this.name }}</p>
@@ -21,6 +26,6 @@
             </ul>
         </div>
     </script>
-    <script src="example.js"></script>
+    
 </body>
 </html>
