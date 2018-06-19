@@ -101,6 +101,7 @@
                     if (match) {
                         let clone = node.cloneNode(true);
                         clone.removeAttribute('data-for');
+                        console.log(match);
                         let lhs = match[1];
                         let rhs = context[match[2]];
                         for (let item of rhs) {
