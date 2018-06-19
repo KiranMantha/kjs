@@ -79,7 +79,6 @@
                         for (let item of args) {
                             values.push(get(context, item));
                         }
-                        console.log(values);
                         let funcName = getFuncName.exec(prop.value)[0];
                         node.addEventListener(events[match[0]], get(context, funcName).bind(context, ...values), false);
                     } else {
@@ -118,7 +117,6 @@
                     if (match) {
                         let clone = node.cloneNode(true);
                         clone.removeAttribute('data-for');
-                        console.log(match);
                         let lhs = match[1];
                         let rhs = context[match[2]];
                         if (rhs.splice) {
