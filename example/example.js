@@ -6,8 +6,8 @@ function sampletemp() {
             <p lc-click='greet'>My Age is {{ age }}</p>
             <p>My Skills are</p>
             <table>
-                <tr data-for='skill in skills track by index'>
-                    <td>{{ skill.data }}</td>
+                <tr data-for='skill in skills'>
+                    <td lc-click='showSkill(skill.data)'>{{ skill.data }}</td>
                 </tr>
             </table>
         </div>
@@ -18,19 +18,18 @@ var context = {
         name: 'Hello World!!',
         age: 25,
         skills: [
-            {data: 'html'},
-            {data: 'css'},
-            {data:'javascript'}
+            { data: 'html' },
+            { data: 'css' },
+            { data: 'javascript' }
         ]
-        // skills: [
-        //     'html', 
-        //     'css', 
-        //     'javascript'
-        // ]
     },
     methods: {
-        greet: function() {
+        greet: function () {
             alert(this.age);
+        },
+        showSkill: function (skill) {
+            alert(skill);
+            this.greet();
         }
     }
 };

@@ -21,14 +21,18 @@
         var trackByExp = match[4];
     */
 
-    var forRegex = /^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+as\s+([\s\S]+?))?(?:\s+track\s+by\s+([\s\S]+?))?\s*$/,
+    let forRegex = /^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+as\s+([\s\S]+?))?(?:\s+track\s+by\s+([\s\S]+?))?\s*$/,
         isExpression = /{{(.+?)}}/g,
-        isEvent = /^lc-(click|submit)/g;
+        isEvent = /^lc-(click|submit)/,
+        isFuncWithArgs = /\(\s*([^)]+?)\s*\)/,
+        getFuncName = /^\s*[A-Za-z][A-Za-z0-9_]*([^\(]*)/i;
 
-        let events = {
-            'lc-click': 'click',
-            'lc-submit': 'submit'
-        }
+
+
+    let events = {
+        'lc-click': 'click',
+        'lc-submit': 'submit'
+    }
 
     function get(obj, path, defaultValue) {
         let patharr = path.trim().split('.');
@@ -64,12 +68,25 @@
     }
 
     function addListeners(node, context) {
-        let match;
-        for(let prop of node.attributes) {
-            if(match = isEvent.exec(prop.name)) {
-                node.addEventListener(events[match[0]], get(context, prop.value).bind(context), false);
-                //node['on'+ events[match[0]]] = get(context, prop.value).bind(context);
-                node.removeAttribute(prop);
+        if (!node.eventsBinded) {
+            let match;
+            let match1;
+            for (let prop of node.attributes) {
+                if (match = isEvent.exec(prop.name)) {
+                    if (match1 = isFuncWithArgs.exec(prop.value)) {
+                        let args = match1[1].split(',');
+                        let values = [];
+                        for (let item of args) {
+                            values.push(get(context, item));
+                        }
+                        console.log(values);
+                        let funcName = getFuncName.exec(prop.value)[0];
+                        node.addEventListener(events[match[0]], get(context, funcName).bind(context, ...values), false);
+                    } else {
+                        node.addEventListener(events[match[0]], get(context, prop.value).bind(context), false);
+                    }
+                    node.eventsBinded = true;
+                }
             }
         }
     }
@@ -104,15 +121,18 @@
                         console.log(match);
                         let lhs = match[1];
                         let rhs = context[match[2]];
-                        for (let item of rhs) {
-                            let reclone = clone.cloneNode(true);
-                            let iobj = {
-                                [lhs]: item
-                            };
-                            let _node = render(iobj, reclone, rootNode);
-                            rootNode.appendChild(_node);
+                        if (rhs.splice) {
+                            rhs.forEach((item, index) => {
+                                let reclone = clone.cloneNode(true);
+                                let iobj = {
+                                    [lhs]: item,
+                                    index: index
+                                };
+                                let _node = render(Object.assign({}, context, iobj), reclone, rootNode);
+                                rootNode.appendChild(_node);
+                            });
+                            rootNode.removeChild(node);
                         }
-                        rootNode.removeChild(node);
                     } else {
                         throw Error('Expected expression in form of \'_item_ in _collection_[ track by _id_]\' but got \'{0}\'.',
                             forCond.value);
