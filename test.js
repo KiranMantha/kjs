@@ -108,33 +108,37 @@
             if (node.nodeType === 3) {
                 _interpolate.call(context, node);
             } else if (node.nodeType === 1) {
-                let forCond = node.attributes['data-for'];
-                addListeners(node, context);
-                if (!forCond) {
-                    render(context, node, rootNode);
-                } else {
-                    match = forRegex.exec(forCond.value);
-                    if (match) {
-                        let clone = node.cloneNode(true);
-                        clone.removeAttribute('data-for');
-                        let lhs = match[1];
-                        let rhs = context[match[2]];
-                        if (rhs.splice) {
-                            rhs.forEach((item, index) => {
-                                let reclone = clone.cloneNode(true);
-                                let iobj = {
-                                    [lhs]: item,
-                                    index: index
-                                };
-                                let _node = render(Object.assign({}, context, iobj), reclone, rootNode);
-                                rootNode.appendChild(_node);
-                            });
-                            rootNode.removeChild(node);
-                        }
+                if (node.nodeName.toUpperCase() !== 'INPUT') {
+                    let forCond = node.attributes['data-for'];
+                    addListeners(node, context);
+                    if (!forCond) {
+                        render(context, node, rootNode);
                     } else {
-                        throw Error('Expected expression in form of \'_item_ in _collection_[ track by _id_]\' but got \'{0}\'.',
-                            forCond.value);
+                        match = forRegex.exec(forCond.value);
+                        if (match) {
+                            let clone = node.cloneNode(true);
+                            clone.removeAttribute('data-for');
+                            let lhs = match[1];
+                            let rhs = context[match[2]];
+                            if (rhs.splice) {
+                                rhs.forEach((item, index) => {
+                                    let reclone = clone.cloneNode(true);
+                                    let iobj = {
+                                        [lhs]: item,
+                                        index: index
+                                    };
+                                    let _node = render(Object.assign({}, context, iobj), reclone, rootNode);
+                                    rootNode.appendChild(_node);
+                                });
+                                rootNode.removeChild(node);
+                            }
+                        } else {
+                            throw Error('Expected expression in form of \'_item_ in _collection_[ track by _id_]\' but got \'{0}\'.',
+                                forCond.value);
+                        }
                     }
+                } else {
+
                 }
             }
         }
@@ -158,6 +162,7 @@
             let ctx = _getContext.call(this);
             this[_context] = Object.assign({}, ctx.data, ctx.methods);
             this[_template] = _getTemplate.call(this);
+            console.log(this[_template].querySelectorAll('[lc-click]'));
             let node = render(this[_context], this[_template], null);
             //this.appendChild(node);
             this._shadowRoot.appendChild(node);//.outerHTML;
