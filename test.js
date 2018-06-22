@@ -1,3 +1,9 @@
+/*
+    https://gist.github.com/superMDguy/9d69b36fef029539683b3fee16171992
+    https://gist.github.com/superMDguy/08c5ab5bac949e4e39776b98f43a5534
+    https://gist.github.com/superMDguy/5ddbeb3cb516a22d8452be6603c07923
+    https://gist.github.com/superMDguy/5d79cf4cc234eb4e78df76ea4af7fc64
+*/
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -106,7 +112,7 @@
         let match;
         for (let node of rootNode.childNodes) {
             if (node.nodeType === 3) {
-                _interpolate.call(context, node);
+                if(node.nodeValue.trim() !== '') _interpolate.call(context, node);
             } else if (node.nodeType === 1) {
                 if (node.nodeName.toUpperCase() !== 'INPUT') {
                     let forCond = node.attributes['data-for'];
@@ -145,6 +151,36 @@
         return rootNode;
     }
 
+    function observe(obj) {
+        function walk() {
+            const keys = Object.keys(obj)
+            for (let i = 0; i < keys.length; i++) {
+                defineSetGet(keys[i], obj[keys[i]])
+            }
+        }
+
+        function defineSetGet(key, val) {
+            if (val !== null && typeof val === 'object') {
+                walk(val) // Add reactivity to all children of val
+            }
+
+            Object.defineProperty(obj, key, {
+                enumerable: true,
+                configurable: true,
+                get: function reactiveGetter() {
+                    console.log(key, val);
+                    return val;
+                },
+                set: function reactiveSetter(newVal) {
+                    console.log('new value', newVal);
+                    val = newVal;
+                }
+            });
+        }
+
+        walk(obj);
+    }
+
     let _context = Symbol('_context');
     let _template = Symbol('_template');
     let _init = Symbol('_init');
@@ -160,16 +196,35 @@
 
         [_init]() {
             let ctx = _getContext.call(this);
+            setTimeout(()=>{
+               // observe(ctx.data);
+            });            
             this[_context] = Object.assign({}, ctx.data, ctx.methods);
             this[_template] = _getTemplate.call(this);
-            console.log(this[_template].querySelectorAll('[lc-click]'));
+            //console.log(this[_template].querySelectorAll('[lc-click]'));
             let node = render(this[_context], this[_template], null);
             //this.appendChild(node);
             this._shadowRoot.appendChild(node);//.outerHTML;
         }
 
+        //Fires when custom component loaded in DOM
         connectedCallback() {
             this[_init]();
+            if (this[_context].lcOnInit) {
+                this[_context].lcOnInit();
+            }
+        }
+
+        //Fires whenever an attribute is added, removed or updated
+        attributeChangedCallback(attrName, oldVal, newVal) {
+
+        }
+
+        //Fires when custom component is unloaded from DOM
+        disconnectedCallback() {
+            if (this[_context].lcOnDestroy) {
+                this[_context].lcOnDestroy();
+            }
         }
     }
 
