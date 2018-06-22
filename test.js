@@ -200,7 +200,7 @@
             setTimeout(()=>{
                // observe(ctx.data);
             });            
-            this[_context] = Object.assign({}, ctx.data, ctx.methods);
+            this[_context] = ctx;
             this[_template] = _getTemplate.call(this);
             //console.log(this[_template].querySelectorAll('[lc-click]'));
             let node = render(this[_context], this[_template], null);

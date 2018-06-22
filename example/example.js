@@ -1,4 +1,5 @@
 //var liteTE = require('lite-te');
+import lcContext from './lc-context';
 function sampletemp() {
     return (`
         <div>
@@ -13,7 +14,7 @@ function sampletemp() {
         </div>
     `);
 }
-var context = {
+var context = new lcContext({
     data: {
         name: 'Hello World!!',
         age: 25,
@@ -32,7 +33,7 @@ var context = {
             this.greet();
         }
     }
-};
+});
 // var tpl = document.getElementById('sampleTpl').innerHTML;
 // var template = liteTE.compile(tpl, 'div');
 // var html = template.bindContext(context);
