@@ -3,6 +3,7 @@
     https://gist.github.com/superMDguy/08c5ab5bac949e4e39776b98f43a5534
     https://gist.github.com/superMDguy/5ddbeb3cb516a22d8452be6603c07923
     https://gist.github.com/superMDguy/5d79cf4cc234eb4e78df76ea4af7fc64
+    https://vuejs.org/v2/guide/reactivity.html
 */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
