@@ -67,8 +67,7 @@
         return (new Function(`return ${this.data('context')}`))();
     }
 
-    function _getTemplate() {
-        let template = (new Function(`return ${this.data('templateref')}`))();
+    function _getTemplate(template) {
         return (new DOMParser()).parseFromString(template, 'application/xml').children[0];
     }
 
@@ -185,11 +184,9 @@
     let _init = Symbol('_init');
 
     class LiteComponent extends HTMLElement {
-        constructor() {
+        constructor(prop) {
             super();
-            this._shadowRoot = this.attachShadow({
-                mode: 'open'
-            });
+            console.log(prop);
             this.data = _data.bind(this);
         }
 
@@ -198,12 +195,12 @@
             setTimeout(()=>{
                // observe(ctx.data);
             });            
-            this[_context] = ctx;
-            this[_template] = _getTemplate.call(this);
+            this[_context] = new ctx.controller();
+            this[_template] = _getTemplate(ctx.template);
             //console.log(this[_template].querySelectorAll('[lc-click]'));
-            let node = render(this[_context], this[_template], null);
+            let node = render(this[_context], this[_template], this);
             //this.appendChild(node);
-            this._shadowRoot.appendChild(node);//.outerHTML;
+            this.appendChild(node);//.outerHTML;
         }
 
         //Fires when custom component loaded in DOM

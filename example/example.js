@@ -1,6 +1,6 @@
 //var liteTE = require('lite-te');
-function sampletemp() {
-    return (`
+var context = new lcContext({
+    template: `
         <div>
             <p>My Name is {{ name }}</p>
             <p lc-click='greet'>My Age is {{ age }}</p>
@@ -11,29 +11,21 @@ function sampletemp() {
                 </tr>
             </table>
         </div>
-    `);
-}
-debugger;
-var context = new lcContext({
-    data: {
-        name: 'Hello World!!',
-        age: 25,
-        skills: [
+    `,
+    controller: function() {
+        this.name = 'Hello World!!';
+        this.age = 25;
+        this.skills = [
             { data: 'html' },
             { data: 'css' },
             { data: 'javascript' }
-        ]
-    },
-    methods: {
-        greet: function () {
+        ];
+        this.greet = function () {
             alert(this.age);
-        },
-        showSkill: function (skill) {
+        };
+        this.showSkill = function (skill) {
             alert(skill);
             this.greet();
         }
     }
 });
-// var tpl = document.getElementById('sampleTpl').innerHTML;
-// var template = liteTE.compile(tpl, 'div');
-// var html = template.bindContext(context);
