@@ -1,5 +1,4 @@
 //var liteTE = require('lite-te');
-import lcContext from './lc-context';
 function sampletemp() {
     return (`
         <div>
@@ -14,6 +13,7 @@ function sampletemp() {
         </div>
     `);
 }
+debugger;
 var context = new lcContext({
     data: {
         name: 'Hello World!!',

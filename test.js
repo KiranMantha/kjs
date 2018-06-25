@@ -34,8 +34,6 @@
         isFuncWithArgs = /\(\s*([^)]+?)\s*\)/,
         getFuncName = /^\s*[A-Za-z][A-Za-z0-9_]*([^\(]*)/i;
 
-
-
     let events = {
         'lc-click': 'click',
         'lc-submit': 'submit'
